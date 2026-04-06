@@ -1,6 +1,12 @@
+/*
+Bài 10. Viết chương trình liệt kê các số nguyên có 7 chữ số thoả mãn cả 3 điều kiện sau:
+- Là số nguyên tố.
+- Tất cả các chữ số là nguyên tố.
+- Đảo của nó cũng là một số nguyên tố.
+* */
 package basic;
 
-public class bai10 {
+public class Bai10 {
 
     // kiểm tra số nguyên tố
     public static boolean isPrime(int n) {
@@ -36,7 +42,9 @@ public class bai10 {
                     for (int d : digits)
                         for (int e : digits)
                             for (int f : digits)
-                                for (int g : digits) {
+                                for (int g : new int[]{3, 7}) {
+                                    // chỉ chữ số cuối là 3 hoặc 7
+                                    // Giảm số lần kiểm tra từ 4^7 = 16384 → 4^6 * 2 = 2048
 
                                     int num = a*1000000 + b*100000 + c*10000
                                             + d*1000 + e*100 + f*10 + g;

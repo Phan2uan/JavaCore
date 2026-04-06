@@ -1,3 +1,6 @@
+/*
+Bài 7. Viết chương trình liệt kê các số nguyên tố có 6 chữ số chỉ bao gồm các chữ số lẻ.
+*/
 package basic;
 
 public class Bai7 {

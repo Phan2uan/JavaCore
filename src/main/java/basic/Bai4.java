@@ -1,3 +1,7 @@
+/*
+Bài 4: Viết chương trình in ra các cặp số nguyên tố cùng nhau trong đoạn [a,b]. Với a,b nhập từ
+bàn phím.
+*/
 package basic;
 
 import java.util.Scanner;
@@ -15,23 +19,31 @@ public class Bai4 {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        int a, b;
 
-        System.out.print("Nhập số a: ");
-        int a = sc.nextInt();
-        System.out.print("Nhập số b: ");
-        int b = sc.nextInt();
-
-        // Validate input
-        if (a > b) {
-            System.out.println("Lỗi: a phải nhỏ hơn hoặc bằng b!");
-            sc.close();
-            return;
+        // Nhập an toàn số nguyên dương
+        while (true) {
+            System.out.print("Nhập số a: ");
+            if (sc.hasNextInt()) {
+                a = sc.nextInt();
+                if (a > 0) break;
+                else System.out.println("a phải là số nguyên dương!");
+            } else {
+                System.out.println("Sai định dạng! Nhập số nguyên.");
+                sc.next();
+            }
         }
 
-        if (a <= 0 || b <= 0) {
-            System.out.println("Lỗi: a và b phải là số nguyên dương!");
-            sc.close();
-            return;
+        while (true) {
+            System.out.print("Nhập số b: ");
+            if (sc.hasNextInt()) {
+                b = sc.nextInt();
+                if (b >= a) break;
+                else System.out.println("b phải >= a!");
+            } else {
+                System.out.println("Sai định dạng! Nhập số nguyên.");
+                sc.next();
+            }
         }
 
         System.out.println("Các cặp số nguyên tố cùng nhau trong đoạn [" + a + ", " + b + "]:");

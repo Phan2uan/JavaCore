@@ -1,17 +1,18 @@
 /*
 Bài 1:
-b. Nhập số tự nhiên n từ bàn phím rồi tính tổng (lưu ý phép chia các số nguyên):
-S = 1 + 1/2 + 1/3 + ... + 1/n
+a. Nhập số nguyên n vào từ bàn phím và viết chương trình tính tổng:
+S = 1 + 3 + 5 + ... + n (nếu n lẻ)
+S = 2 + 4 + ... + n (nếu n chẵn)
 */
 package basic;
 
 import java.util.Scanner;
 
-public class Bai1b {
+public class Bai1a {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        int sum = 0;
         int n = 0;
-        double sum = 0;
 
         //Validate giá trị nhập vào tránh nhập sai dừng chương tình luôn
         while (true) {
@@ -26,12 +27,18 @@ public class Bai1b {
             }
         }
 
-        for (int i = 1; i <= n; i++) {
-            sum += 1.0 / i; // ép kiểu double
+        if (n % 2 == 1) { // n lẻ
+            for (int i = 1; i <= n; i += 2) {
+                sum += i;
+            }
+        } else { // n chẵn
+            for (int i = 2; i <= n; i += 2) {
+                sum += i;
+            }
         }
 
-        System.out.println("S = " + sum);
-
-        sc.close(); //Giải phóng bộ nhớ
+        System.out.println("Tổng S = " + sum);
+        sc.close();
     }
 }
+
