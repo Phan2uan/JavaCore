@@ -1,3 +1,7 @@
+/*
+Bài 10. Nhập số liệu cho ma trận A kích thước n x n có các phần tử là các số nguyên. Tính tổng các phần tử
+theo đường chéo chính và đường chéo phụ của ma trận.
+*/
 package Array;
 
 import java.util.Scanner;
@@ -34,3 +38,10 @@ public class Bai10 {
         System.out.println("Tổng đường chéo phụ: " + sumSub);
     }
 }
+
+/*
+Đúng: sumMain += A[i][i], sumSub += A[i][n-1-i].
+Góp ý:
+    Nếu n lẻ, phần tử trung tâm bị tính vào cả 2 tổng (đúng theo định nghĩa “tổng từng đường chéo”).
+    Validate n > 0.
+* */

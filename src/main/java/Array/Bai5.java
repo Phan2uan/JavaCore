@@ -1,3 +1,9 @@
+/*
+Bài 5. Nhập 2 mảng (a, n) và (b, m) và số nguyên p (0 ≤ p < n). Hãy chèn mảng b vào vị trí p của a. Ví dụ:
+(a, 4): 5 3 6 7;
+(b, 3): 2 9 11;
+p: 1
+=> (a, 7): 5 2 9 11 3 6 7* */
 package Array;
 
 import java.util.Scanner;
@@ -57,3 +63,12 @@ public class Bai5 {
         }
     }
 }
+/*
+Ý tưởng đúng: tạo mảng mới c kích thước n+m, copy 3 đoạn.
+Thiếu quan trọng:
+    Đề cho ràng buộc 0 ≤ p < n nhưng code không validate:
+        Nếu p < 0 hoặc p > n sẽ lỗi hoặc cho kết quả sai.
+    Đề là p < n (không cho chèn cuối), còn thực tế nhiều bài cho phép p == n. Nen theo đúng đề hoặc chặn.
+Góp ý:
+    Đặt tên c có thể là result để dễ hiểu (không bắt buộc).
+ */

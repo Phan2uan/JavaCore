@@ -1,3 +1,9 @@
+/*
+Bài 7. Nhập mảng (a, n). Xác định đường chạy dài nhất, xuất lên màn hình vị trí phần tử đầu tiên và độ dài của
+đường chạy đó. Đường chạy là một dãy liên tiếp các phần tử không giảm của dãy ban đầu. Ví dụ:
+Nhập dãy 1 4 2 3 1 2 6 8 3 5 7
+Đường chạy dài nhất ở vị trí 4 với độ dài là 4
+*/
 package Array;
 
 import java.util.Scanner;
@@ -43,3 +49,11 @@ public class Bai7 {
         System.out.println("Độ dài: " + maxLen);
     }
 }
+
+/*
+Đúng: duyệt 1 lần, tracking currLen, maxLen, start.
+Góp ý:
+    Nếu có nhiều đường chạy dài nhất bằng nhau:
+        Code hiện chọn đường chạy xuất hiện trước (do chỉ update khi >). Đây là hợp lý.
+    Edge case n = 0: hiện currLen=1 sẽ không hợp lý và có thể in sai. Nên chặn n > 0.
+ */

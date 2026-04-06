@@ -1,3 +1,7 @@
+/*
+Bài 1. Nhập mảng (a, n) và kiểm tra mảng a có phải là mảng đối xứng hay không. Ví dụ: [15 2 1 2 15] là
+mảng đối xứng.
+* */
 package Array;
 
 import java.util.Scanner;
@@ -30,3 +34,10 @@ public class Bai1 {
         }
     }
 }
+/*
+Đúng thuật toán: so sánh a[i] với a[n-1-i] tới n/2.
+Edge case:
+    n = 0: chương trình vẫn tạo mảng được, vòng lặp không chạy, in “đối xứng” cũng hợp lý, nhưng UX thì nên chặn n > 0 (không bắt buộc).
+Góp ý:
+    Input validation: nên kiểm tra n âm (nếu nhập sai).
+ */

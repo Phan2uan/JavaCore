@@ -1,3 +1,6 @@
+/*
+Bài 8. Viết chương trình tính tích 2 ma trận các số nguyên A cấp m*n và B cấp n*k.
+*/
 package Array;
 
 import java.util.Scanner;
@@ -60,3 +63,9 @@ public class Bai8 {
         }
     }
 }
+
+/*
+Đúng thuật toán nhân ma trận: 3 vòng lặp i, j, t.
+Góp ý:
+    Nên validate m, n, k > 0.
+ */

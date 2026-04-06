@@ -1,3 +1,6 @@
+/*
+Bài 2. Nhập mảng (a, n) và sắp xếp theo thứ tự tăng dần.
+* */
 package Array;
 
 import java.util.Scanner;
@@ -36,3 +39,9 @@ public class Bai2 {
         }
     }
 }
+/*
+Đúng: dùng sort kiểu đổi chỗ O(n²).
+Góp ý:
+    Có thể tách hàm swap/sort để code sạch hơn (không bắt buộc).
+    Nên in xuống dòng cuối.
+* */
