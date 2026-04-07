@@ -11,8 +11,16 @@ class BanDoc {
     private String loaiBanDoc;
     private static int demMa = 10000;
 
+    // NOTE (đối chiếu đề bài): Loại bạn đọc theo đề là tập giá trị cố định
+    // (sinh viên / học viên cao học / giáo viên) => nên dùng enum thay vì String để tránh nhập sai chính tả.
+    // Hiện tại đang lưu String nên dễ bị sai/không đồng nhất dữ liệu.
+
     public BanDoc(String hoTen, String diaChi, String sdt, String loaiBanDoc) {
         this.maBanDoc = ++demMa;
+        // NOTE (đối chiếu đề bài): mã bạn đọc là số nguyên 5 chữ số tự động tăng.
+        // - demMa đang khởi tạo 10000 và ++demMa => mã đầu tiên là 10001.
+        // - Nếu cần mã đầu tiên là 10000 thì dùng demMa++ hoặc khởi tạo 9999.
+        // - Nếu có yêu cầu lưu/đọc file, demMa cần được đồng bộ theo mã lớn nhất để tránh trùng khi chạy lại.
         this.hoTen = hoTen;
         this.diaChi = diaChi;
         this.sdt = sdt;
@@ -38,8 +46,13 @@ class Sach {
     private int namXuatBan;
     private static int demMa = 10000;
 
+    // NOTE (đối chiếu đề bài): Chuyên ngành là tập giá trị cố định (4 nhóm) => nên dùng enum thay vì String.
+    // Hiện tại dùng String sẽ khó chuẩn hóa dữ liệu và dễ sai chính tả.
+
     public Sach(String tenSach, String tacGia, String chuyenNganh, int namXuatBan) {
         this.maSach = ++demMa;
+        // NOTE (đối chiếu đề bài): mã sách là số nguyên 5 chữ số tự động tăng.
+        // Tương tự BanDoc, mã đầu tiên sẽ là 10001 với cách ++demMa.
         this.tenSach = tenSach;
         this.tacGia = tacGia;
         this.chuyenNganh = chuyenNganh;
@@ -75,6 +88,8 @@ class ChiTietMuon {
 
     @Override
     public String toString() {
+        // NOTE (bug hiển thị): Format đang in "Mã sách" nhưng lại truyền banDoc.getMaBanDoc() lần 2.
+        // Theo đúng header ở dưới, vị trí thứ 3 phải là sach.getMaSach().
         return String.format("%-10d %-25s %-10d %-30s %-10d %-15s",
                 banDoc.getMaBanDoc(), banDoc.getHoTen(), banDoc.getMaBanDoc(),
                 sach.getTenSach(), soLuong, tinhTrang);
@@ -96,6 +111,9 @@ class QuanLyMuonSach {
         danhSachBanDoc = new BanDoc[MAX];
         danhSachSach = new Sach[MAX];
         danhSachMuon = new ChiTietMuon[MAX * 5];
+        // NOTE (đối chiếu đề bài): Mỗi bạn đọc tối đa 5 đầu sách => nếu MAX bạn đọc đều mượn tối đa,
+        // tổng số dòng quản lý mượn tối đa là MAX*5 (đúng với kích thước mảng hiện tại).
+        // Tuy nhiên vẫn nên kiểm tra soLuongMuon có vượt danhSachMuon.length trước khi thêm.
         soLuongBanDoc = 0;
         soLuongSach = 0;
         soLuongMuon = 0;
@@ -121,6 +139,10 @@ class QuanLyMuonSach {
             System.out.println("Danh sách sách đã đầy!");
             return;
         }
+
+        // NOTE (đối chiếu yêu cầu 1): Đề bài thường yêu cầu "nhập danh sách" (nhiều sách/lần nhập)
+        // và "in ra danh sách sau khi nhập".
+        // Hiện tại hàm này mỗi lần chỉ nhập 1 cuốn và không tự in danh sách ngay (menu có mục in riêng).
 
         System.out.print("Nhập tên sách: ");
         String tenSach = nhapChuoi();
@@ -165,6 +187,9 @@ class QuanLyMuonSach {
             return;
         }
 
+        // NOTE (đối chiếu yêu cầu 2): Tương tự sách, hiện tại mỗi lần chỉ nhập 1 bạn đọc.
+        // Nếu muốn sát đề, nên cho nhập số lượng n và lặp n lần, rồi in danh sách ngay sau khi nhập.
+
         System.out.print("Nhập họ tên: ");
         String hoTen = nhapChuoi();
         System.out.print("Nhập địa chỉ: ");
@@ -201,6 +226,11 @@ class QuanLyMuonSach {
 
     // Kiểm tra bạn đọc đã mượn đầu sách này chưa
     private boolean daMuonSach(BanDoc bd, Sach s) {
+        // NOTE (quan trọng - bug logic): Điều kiện kiểm tra trùng đang sai.
+        // Cần so sánh (mã bạn đọc, mã sách) để đảm bảo 1 bạn đọc - 1 đầu sách không xuất hiện 2 lần.
+        // Nhưng code hiện tại lại so sánh mã bạn đọc với mã sách:
+        //   danhSachMuon[i].getBanDoc().getMaBanDoc() == s.getMaSach()
+        // => gần như luôn sai, dẫn đến không chặn trùng đúng như yêu cầu đề bài.
         for (int i = 0; i < soLuongMuon; i++) {
             if (danhSachMuon[i].getBanDoc().getMaBanDoc() == bd.getMaBanDoc() &&
                     danhSachMuon[i].getBanDoc().getMaBanDoc() == s.getMaSach()) {
@@ -271,6 +301,12 @@ class QuanLyMuonSach {
             System.out.println("Bạn đọc đã mượn đầu sách này rồi!");
             return;
         }
+
+        // NOTE (đối chiếu ràng buộc đề bài):
+        // - Mỗi bạn đọc không quá 5 đầu sách khác nhau: đã kiểm tra bằng demDauSachDaMuon().
+        // - Mỗi đầu sách không mượn quá 3 cuốn: đã validate soLuong 1..3.
+        // - Cần ghi rõ tình trạng hiện thời: đã có trường tinhTrang.
+        // Thiếu: chưa kiểm tra tràn mảng danhSachMuon khi soLuongMuon tăng.
 
         System.out.print("Nhập số lượng (1-3): ");
         int soLuong = nhapSo();
@@ -375,6 +411,12 @@ public class QuanLyThuVien {
     public static void main(String[] args) {
         QuanLyMuonSach ql = new QuanLyMuonSach();
         Scanner scanner = new Scanner(System.in);
+
+        // NOTE (yêu cầu kỹ thuật): Đề bài yêu cầu áp dụng "Kế thừa" + "Đóng gói".
+        // - Đóng gói: đã dùng private field + getter cơ bản.
+        // - Kế thừa: hiện tại các class (BanDoc, Sach, ChiTietMuon) chưa thể hiện quan hệ kế thừa rõ ràng.
+        //   Nếu muốn đúng yêu cầu, có thể tạo lớp cha (Ví dụ: Nguoi/ThongTin) rồi BanDoc kế thừa,
+        //   hoặc tạo lớp tài liệu chung rồi Sach kế thừa (tùy thiết kế).
 
         while (true) {
             System.out.println("\n========== HỆ THỐNG QUẢN LÝ MƯỢN SÁCH THƯ VIỆN ==========");
