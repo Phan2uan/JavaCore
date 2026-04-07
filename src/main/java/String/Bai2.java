@@ -1,3 +1,7 @@
+/*
+Bài 2: Viết chương trình nhập vào một xâu ký tự s bất kỳ, sau đó chuyển sang dạng xen kẽ chữ in hoa và chữ
+in thường. Ví dụ s = ABCDefgh thì kết quả là AbCdEfGh
+ */
 package String;
 
 import java.util.Scanner;
@@ -11,6 +15,11 @@ public class Bai2 {
 
         StringBuilder result = new StringBuilder();
         int count = 0; // đếm số chữ cái
+
+        // NOTE (đối chiếu đề bài): Ví dụ "ABCDefgh" -> "AbCdEfGh" (xen kẽ hoa/thường).
+        // Cách làm hiện tại xen kẽ theo thứ tự CÁC CHỮ CÁI (Character.isLetter),
+        // còn các ký tự không phải chữ (space, dấu, số...) sẽ được giữ nguyên và không ảnh hưởng nhịp xen kẽ.
+        // Nếu đề muốn xen kẽ theo vị trí ký tự (kể cả dấu cách/ký tự đặc biệt) thì cần cách đếm khác.
 
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
