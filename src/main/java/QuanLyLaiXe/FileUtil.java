@@ -3,6 +3,8 @@ package QuanLyLaiXe;
 import java.io.*;
 import java.util.List;
 
+//Thừa ???
+
 public class FileUtil {
     public static <T> void write(String file, List<T> data) {
         try (ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(file))) {

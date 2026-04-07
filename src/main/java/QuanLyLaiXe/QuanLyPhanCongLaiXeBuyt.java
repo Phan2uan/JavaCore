@@ -8,6 +8,11 @@ public class QuanLyPhanCongLaiXeBuyt {
     static List<Tuyen> dsTuyen = new ArrayList<>();
     static List<BangPhanCong> dsPC = new ArrayList<>();
 
+    // NOTE (đối chiếu yêu cầu kỹ thuật): Đề bài bài này CHO PHÉP dùng Collection và Java 8.
+    // Dùng List/ArrayList + lambda/stream (ở BangPhanCong) => phù hợp.
+    // Tuy nhiên đề cũng yêu cầu "dữ liệu được lưu vào file" và "xử lý exception" ở mức chương trình tổng thể,
+    // hiện tại menu chưa có chức năng ghi/đọc file, nên chưa đáp ứng phần này.
+
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -20,6 +25,9 @@ public class QuanLyPhanCongLaiXeBuyt {
             System.out.println("0. Thoát");
 
             int chon = sc.nextInt();
+
+            // NOTE (exception): Ở đây dùng nextInt() trực tiếp, nếu người dùng nhập sai kiểu sẽ InputMismatchException
+            // và chương trình có thể dừng. Ở các chỗ khác bạn có try/catch, nên nên đồng bộ cách nhập.
 
             switch (chon) {
                 case 1: nhapLX(); break;
@@ -52,6 +60,10 @@ public class QuanLyPhanCongLaiXeBuyt {
 
             System.out.print("Trình độ (A-F): ");
             String td = sc.nextLine();
+
+            // NOTE (đối chiếu đề bài): Trình độ lái xe được chọn trong Loại A..Loại F.
+            // Hiện tại bạn nhận String tự do và không validate (A/B/C/D/E/F).
+            // Nên validate hoặc dùng enum để tránh nhập sai.
 
             dsLX.add(new LaiXe(ten, dc, sdt, td));
         }
@@ -87,6 +99,12 @@ public class QuanLyPhanCongLaiXeBuyt {
             return;
         }
 
+        // NOTE (đối chiếu yêu cầu 3): Đề yêu cầu "nhập danh sách phân công cho mỗi lái xe".
+        // Hiện tại hàm này mỗi lần chạy sẽ duyệt TẤT CẢ lái xe và tạo mới BangPhanCong cho từng người,
+        // sau đó dsPC.add(b).
+        // => Nếu gọi menu phân công nhiều lần, dsPC sẽ có NHIỀU bảng phân công trùng cho cùng 1 lái xe
+        // (không kiểm tra đã tồn tại hay chưa), dễ lệch ý nghĩa "trong một ngày".
+        // Thông thường nên: chọn 1 lái xe -> phân công cho lái xe đó, và/hoặc update bảng đã có.
         for (LaiXe lx : dsLX) {
             System.out.println("\n=================================");
             System.out.println("👉 Phân công cho lái xe: " + lx.getHoTen());
@@ -170,6 +188,11 @@ public class QuanLyPhanCongLaiXeBuyt {
             dsPC.sort((a, b) -> b.soTuyen() - a.soTuyen());
         }
 
+        // NOTE (đối chiếu đề bài mục 4):
+        // - 4a Theo Họ tên lái xe: làm đúng.
+        // - 4b Theo số lượng tuyến đảm nhận (giảm dần): làm đúng.
+        // Gợi ý: nên validate người dùng chọn 1/2, hiện tại nhập khác 1 sẽ tự rơi vào nhánh else.
+
         System.out.println("\n===== SAU SẮP XẾP =====");
         dsPC.forEach(System.out::println);
     }
@@ -177,6 +200,11 @@ public class QuanLyPhanCongLaiXeBuyt {
     // ===== Thống kê =====
     static void thongKe() {
         System.out.println("\n===== THỐNG KÊ TỔNG KM =====");
+
+        // NOTE (đối chiếu đề bài mục 5): "kê tổng khoảng cách chạy xe trong ngày của mỗi lái xe".
+        // tongKm() đang tính tổng (khoảng cách tuyến * số lượt) theo từng bảng phân công => đúng ý.
+        // Tuy nhiên nếu dsPC có nhiều bảng cho cùng 1 lái xe (do phân công nhiều lần), thống kê sẽ bị tách dòng
+        // thay vì gộp theo lái xe.
 
         dsPC.forEach(x ->
                 System.out.println(
