@@ -15,6 +15,11 @@ public class Bai2 {
         StringBuilder result = new StringBuilder();
         int count = 0; // đếm số chữ cái để quyết định hoa/thường
 
+        // NOTE (đối chiếu đề bài): Ví dụ "ABCDefgh" -> "AbCdEfGh" (xen kẽ hoa/thường).
+        // Cách làm hiện tại xen kẽ theo thứ tự CÁC CHỮ CÁI (Character.isLetter),
+        // còn các ký tự không phải chữ (space, dấu, số...) sẽ được giữ nguyên và không ảnh hưởng nhịp xen kẽ.
+        // Nếu đề muốn xen kẽ theo vị trí ký tự (kể cả dấu cách/ký tự đặc biệt) thì cần cách đếm khác.
+
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             if (Character.isLetter(c)) {
