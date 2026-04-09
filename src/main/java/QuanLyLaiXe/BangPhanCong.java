@@ -13,27 +13,24 @@ public class BangPhanCong implements Serializable {
     }
 
     public LaiXe getLaiXe() { return laiXe; }
+    public List<PhanCongChiTiet> getDs() { return ds; }
 
-    public void them(Tuyen tuyen, int soLuot) {
-        // ❌ Không trùng tuyến
+    public boolean them(Tuyen tuyen, int soLuot) {
+        // Kiểm tra trùng tuyến
         for (PhanCongChiTiet pc : ds) {
             if (pc.getTuyen().getMaTuyen() == tuyen.getMaTuyen()) {
-                System.out.println("Trùng tuyến!");
-                return;
+                System.out.println("❌ Lái xe đã được phân công tuyến này rồi!");
+                return false;
             }
         }
-
-        // ❌ Tổng lượt <= 15
-        int tong = ds.stream()
-                .mapToInt(PhanCongChiTiet::getSoLuot)
-                .sum();
-
-        if (tong + soLuot > 15) {
-            System.out.println("Quá 15 lượt!");
-            return;
+        // Tính tổng số lượt hiện tại
+        int tongLuot = ds.stream().mapToInt(PhanCongChiTiet::getSoLuot).sum();
+        if (tongLuot + soLuot > 15) {
+            System.out.println("❌ Tổng số lượt vượt quá 15! (Hiện tại: " + tongLuot + ")");
+            return false;
         }
-
         ds.add(new PhanCongChiTiet(tuyen, soLuot));
+        return true;
     }
 
     public int soTuyen() {
@@ -41,17 +38,18 @@ public class BangPhanCong implements Serializable {
     }
 
     public double tongKm() {
-        return ds.stream()
-                .mapToDouble(x -> x.getTuyen().getKhoangCach() * x.getSoLuot())
-                .sum();
+        return ds.stream().mapToDouble(pc -> pc.getTuyen().getKhoangCach() * pc.getSoLuot()).sum();
     }
 
     @Override
     public String toString() {
-        return laiXe.getHoTen() + " | Số tuyến: " + soTuyen();
-    }
-
-    public List<PhanCongChiTiet> getDs() {
-        return ds;
+        StringBuilder sb = new StringBuilder();
+        sb.append(laiXe.getHoTen()).append(" (Mã: ").append(laiXe.getMaLX()).append(")\n");
+        for (PhanCongChiTiet pc : ds) {
+            sb.append("  ").append(pc).append("\n");
+        }
+        sb.append("  Tổng lượt: ").append(ds.stream().mapToInt(PhanCongChiTiet::getSoLuot).sum())
+                .append(", Tổng km: ").append(tongKm());
+        return sb.toString();
     }
 }

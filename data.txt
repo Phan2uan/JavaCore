@@ -1,4 +1,8 @@
-q,toan,8.0
-q,van,2.0
-rang,toan,1.0
-rang,van,2.0
+#SinhVien
+10001,phan2uan,dv,02131231212,ktvt2
+10002,trang,cc,0149738,ds;adá
+#MonHoc
+101,toan,3,DAI_CUONG
+102,van,2,CO_SO_NGANH
+#BangDiem
+10001,101,8.0

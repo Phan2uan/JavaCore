@@ -13,4 +13,9 @@ public class PhanCongChiTiet implements Serializable {
 
     public Tuyen getTuyen() { return tuyen; }
     public int getSoLuot() { return soLuot; }
+
+    @Override
+    public String toString() {
+        return "Tuyến " + tuyen.getMaTuyen() + " | Lượt: " + soLuot;
+    }
 }

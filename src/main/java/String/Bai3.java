@@ -29,5 +29,6 @@ public class Bai3 {
         }
 
         System.out.println("Chuoi sau khi chuan hoa: " + result.toString().trim());
+        sc.close();
     }
 }
